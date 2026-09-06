@@ -1,4 +1,6 @@
-ListenActive na Windows 10 i 11 (64-bit).
+ListenActive 0.1.1 na Windows 10 i 11 (64-bit).
+
+Poprawiono zakończenie uploadu: klient wysyła prawidłowy JSON do API. Test z działającym Dockerem potwierdził przesyłanie i wznawianie, odtwarzanie 360p/480p/720p/1080p, miniaturę, transkrypcję oraz unieważnianie zadań.
 
 - Tryb samodzielny: lokalna transkrypcja nagrania do SRT i TXT.
 - Tryb strony: wszystkie jakości HLS, okładka i opcjonalna transkrypcja powstają na komputerze redaktora; wysyłane są gotowe pliki.
@@ -7,4 +9,4 @@ ListenActive na Windows 10 i 11 (64-bit).
 
 Rozpakuj cały ZIP i uruchom ListenActive.exe. Pierwsze użycie pobiera FFmpeg i wybrany model. Zależności Python i biblioteki wykonawcze GPU są w paczce. Kod aplikacji jest na licencji MIT; zależności mają własne licencje.
 
-Sprawdzono lokalne kodowanie i transkrypcję na RTX 4070 Ti oraz CPU. Integracja strony wymaga backendu protokołu 1 opisanego w INTEGRATION.md. Pełny test wdrożenia Docker pozostaje do wykonania po przywróceniu lokalnego silnika Docker Desktop. Aplikacja nie ma podpisu Authenticode.
+Sprawdzono lokalne kodowanie i transkrypcję na RTX 4070 Ti oraz CPU. Integracja strony wymaga backendu protokołu 1 opisanego w INTEGRATION.md. Test integracji z Dockerem zakończył się powodzeniem. Aplikacja nie ma podpisu Authenticode.

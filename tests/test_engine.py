@@ -1,4 +1,5 @@
 import hashlib
+import io
 import json
 from pathlib import Path
 import sys
@@ -12,6 +13,15 @@ from engine import SiteClient, export_transcript, playlist, renditions, srt_time
 
 
 class EngineTests(unittest.TestCase):
+    def test_completion_sends_valid_json_to_the_api(self):
+        job = dict(protocol=1, jobId='11111111-1111-4111-8111-111111111111', token='a' * 43, kind='video', apiUrl='http://localhost:4000/api/v1')
+        client = SiteClient(job, threading.Event(), lambda _: None)
+        with patch.object(client.opener, 'open', return_value=io.BytesIO(b'{"completed":true}')) as opened:
+            self.assertTrue(client.request('POST', '/complete')['completed'])
+            request = opened.call_args.args[0]
+            self.assertEqual(json.loads(request.data), {})
+            self.assertEqual(request.get_header('Content-type'), 'application/json')
+
     def test_no_upscaling_and_all_qualities(self):
         self.assertEqual([r['height'] for r in renditions(3840, 2160, True)], [360, 480, 720, 1080, 1440])
         self.assertEqual(renditions(320, 240, False), [dict(label='240p', height=240, width=320, bitrate=500000, audioBitrate=0)])

@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 import zipfile
 
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 APP_DATA = Path(os.environ.get('LOCALAPPDATA', Path.home())) / 'ListenActive'
 FFMPEG_URL = 'https://github.com/GyanD/codexffmpeg/releases/download/7.1.1/ffmpeg-7.1.1-essentials_build.zip'
 FFMPEG_SHA256 = '04861d3339c5ebe38b56c19a15cf2c0cc97f5de4fa8910e4d47e5e6404e4a2d4'
@@ -76,6 +76,8 @@ class SiteClient:
 
     def request(self, method, path='', data=None, binary=False):
         url = self.job['apiUrl'].rstrip('/') + '/desktop-media/jobs/' + self.job['jobId'] + path
+        if data is None and method in ('POST', 'PUT', 'PATCH') and not binary:
+            data = {}
         payload = data if binary else (json.dumps(data).encode() if data is not None else None)
         for attempt in range(6):
             if self.cancel.is_set():
